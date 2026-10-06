@@ -1,0 +1,164 @@
+{
+  "patients": [
+    {
+      "patient_id": "MICH-001",
+      "name": "Michelin",
+      "species": "feline",
+      "breed": "Domestic Shorthair (DSH)",
+      "sex": "MN",
+      "date_of_birth": "2016-04-06",
+      "age_years": 10.5,
+      "caregiver": {
+        "name": "Primary caregiver",
+        "contact_channel": "haiiro-app"
+      },
+      "attending_veterinarian": "Dr. Andy",
+      "active_problems": [
+        "Chronic intermittent vomiting",
+        "Progressive weight loss",
+        "Declining urine specific gravity trend",
+        "Elevated fPLI - pancreatitis not excluded"
+      ],
+      "allergies": [],
+      "medications": [
+        {
+          "name": "Maropitant citrate (antiemetic)",
+          "dose": "As prescribed by Dr. Andy",
+          "frequency": "q24h",
+          "started": "2026-09-22",
+          "ended": "2026-09-26"
+        }
+      ],
+      "weights": [
+        { "recorded_at": "2025-04-10", "weight_kg": 5.8, "body_condition_score": 6, "source": "clinic" },
+        { "recorded_at": "2025-11-03", "weight_kg": 5.4, "body_condition_score": 5, "source": "clinic" },
+        { "recorded_at": "2026-09-22", "weight_kg": 5.0, "body_condition_score": 4, "source": "clinic" }
+      ],
+      "labs": [
+        { "lab_id": "LAB-20250410-CREA", "analyte": "creatinine", "display_name": "Creatinine", "panel": "chemistry", "value": 1.4, "unit": "mg/dL", "reference_low": 0.6, "reference_high": 2.4, "status": "NORMAL", "raw_text": "1.4", "collected_at": "2025-04-10", "source_document": "RefLab-Accession-25-0410-117.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20250410-SDMA", "analyte": "sdma", "display_name": "SDMA", "panel": "chemistry", "value": 12, "unit": "µg/dL", "reference_low": 0, "reference_high": 14, "status": "NORMAL", "raw_text": "12", "collected_at": "2025-04-10", "source_document": "RefLab-Accession-25-0410-117.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20250410-BUN", "analyte": "bun", "display_name": "Blood Urea Nitrogen", "panel": "chemistry", "value": 24, "unit": "mg/dL", "reference_low": 16, "reference_high": 36, "status": "NORMAL", "raw_text": "24", "collected_at": "2025-04-10", "source_document": "RefLab-Accession-25-0410-117.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20250410-PHOS", "analyte": "phosphorus", "display_name": "Phosphorus", "panel": "chemistry", "value": 4.1, "unit": "mg/dL", "reference_low": 3.1, "reference_high": 7.5, "status": "NORMAL", "raw_text": "4.1", "collected_at": "2025-04-10", "source_document": "RefLab-Accession-25-0410-117.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20250410-K", "analyte": "potassium", "display_name": "Potassium", "panel": "chemistry", "value": 4.4, "unit": "mmol/L", "reference_low": 3.5, "reference_high": 5.8, "status": "NORMAL", "raw_text": "4.4", "collected_at": "2025-04-10", "source_document": "RefLab-Accession-25-0410-117.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20250410-ALT", "analyte": "alt", "display_name": "ALT", "panel": "chemistry", "value": 62, "unit": "U/L", "reference_low": 12, "reference_high": 130, "status": "NORMAL", "raw_text": "62", "collected_at": "2025-04-10", "source_document": "RefLab-Accession-25-0410-117.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20250410-FPLI", "analyte": "fpli", "display_name": "Spec fPL (fPLI)", "panel": "special", "value": 2.8, "unit": "µg/L", "reference_low": 0, "reference_high": 3.5, "status": "NORMAL", "raw_text": "2.8", "collected_at": "2025-04-10", "source_document": "RefLab-Accession-25-0410-117.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20250410-USG", "analyte": "usg", "display_name": "Urine Specific Gravity", "panel": "urinalysis", "value": 1.045, "unit": "", "reference_low": 1.035, "reference_high": null, "status": "NORMAL", "raw_text": "1.045", "collected_at": "2025-04-10", "source_document": "RefLab-Accession-25-0410-117.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20250410-PLT", "analyte": "platelets", "display_name": "Platelet Count", "panel": "cbc", "value": 310, "unit": "K/µL", "reference_low": 151, "reference_high": 600, "status": "NORMAL", "raw_text": "310", "collected_at": "2025-04-10", "source_document": "RefLab-Accession-25-0410-117.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20250410-HCT", "analyte": "hct", "display_name": "Hematocrit", "panel": "cbc", "value": 38, "unit": "%", "reference_low": 30.3, "reference_high": 52.3, "status": "NORMAL", "raw_text": "38", "collected_at": "2025-04-10", "source_document": "RefLab-Accession-25-0410-117.pdf", "laboratory": "Reference Laboratory" },
+
+        { "lab_id": "LAB-20251103-CREA", "analyte": "creatinine", "display_name": "Creatinine", "panel": "chemistry", "value": 1.9, "unit": "mg/dL", "reference_low": 0.6, "reference_high": 2.4, "status": "NORMAL", "raw_text": "1.9", "collected_at": "2025-11-03", "source_document": "RefLab-Accession-25-1103-042.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20251103-SDMA", "analyte": "sdma", "display_name": "SDMA", "panel": "chemistry", "value": 16, "unit": "µg/dL", "reference_low": 0, "reference_high": 14, "status": "HIGH", "raw_text": "16 H", "collected_at": "2025-11-03", "source_document": "RefLab-Accession-25-1103-042.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20251103-BUN", "analyte": "bun", "display_name": "Blood Urea Nitrogen", "panel": "chemistry", "value": 31, "unit": "mg/dL", "reference_low": 16, "reference_high": 36, "status": "NORMAL", "raw_text": "31", "collected_at": "2025-11-03", "source_document": "RefLab-Accession-25-1103-042.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20251103-PHOS", "analyte": "phosphorus", "display_name": "Phosphorus", "panel": "chemistry", "value": 4.8, "unit": "mg/dL", "reference_low": 3.1, "reference_high": 7.5, "status": "NORMAL", "raw_text": "4.8", "collected_at": "2025-11-03", "source_document": "RefLab-Accession-25-1103-042.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20251103-K", "analyte": "potassium", "display_name": "Potassium", "panel": "chemistry", "value": 4.1, "unit": "mmol/L", "reference_low": 3.5, "reference_high": 5.8, "status": "NORMAL", "raw_text": "4.1", "collected_at": "2025-11-03", "source_document": "RefLab-Accession-25-1103-042.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20251103-ALT", "analyte": "alt", "display_name": "ALT", "panel": "chemistry", "value": 95, "unit": "U/L", "reference_low": 12, "reference_high": 130, "status": "NORMAL", "raw_text": "95", "collected_at": "2025-11-03", "source_document": "RefLab-Accession-25-1103-042.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20251103-FPLI", "analyte": "fpli", "display_name": "Spec fPL (fPLI)", "panel": "special", "value": 4.1, "unit": "µg/L", "reference_low": 0, "reference_high": 3.5, "status": "HIGH", "raw_text": "4.1 H", "collected_at": "2025-11-03", "source_document": "RefLab-Accession-25-1103-042.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20251103-USG", "analyte": "usg", "display_name": "Urine Specific Gravity", "panel": "urinalysis", "value": 1.030, "unit": "", "reference_low": 1.035, "reference_high": null, "status": "LOW", "raw_text": "1.030", "collected_at": "2025-11-03", "source_document": "RefLab-Accession-25-1103-042.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20251103-PLT", "analyte": "platelets", "display_name": "Platelet Count", "panel": "cbc", "value": 285, "unit": "K/µL", "reference_low": 151, "reference_high": 600, "status": "NORMAL", "raw_text": "285", "collected_at": "2025-11-03", "source_document": "RefLab-Accession-25-1103-042.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20251103-HCT", "analyte": "hct", "display_name": "Hematocrit", "panel": "cbc", "value": 35, "unit": "%", "reference_low": 30.3, "reference_high": 52.3, "status": "NORMAL", "raw_text": "35", "collected_at": "2025-11-03", "source_document": "RefLab-Accession-25-1103-042.pdf", "laboratory": "Reference Laboratory" },
+
+        { "lab_id": "LAB-20260922-CREA", "analyte": "creatinine", "display_name": "Creatinine", "panel": "chemistry", "value": 2.3, "unit": "mg/dL", "reference_low": 0.6, "reference_high": 2.4, "status": "NORMAL", "raw_text": "2.3", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-SDMA", "analyte": "sdma", "display_name": "SDMA", "panel": "chemistry", "value": 19, "unit": "µg/dL", "reference_low": 0, "reference_high": 14, "status": "HIGH", "raw_text": "19 H", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-BUN", "analyte": "bun", "display_name": "Blood Urea Nitrogen", "panel": "chemistry", "value": 38, "unit": "mg/dL", "reference_low": 16, "reference_high": 36, "status": "HIGH", "raw_text": "38 H", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-PHOS", "analyte": "phosphorus", "display_name": "Phosphorus", "panel": "chemistry", "value": 5.2, "unit": "mg/dL", "reference_low": 3.1, "reference_high": 7.5, "status": "NORMAL", "raw_text": "5.2", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-K", "analyte": "potassium", "display_name": "Potassium", "panel": "chemistry", "value": 3.8, "unit": "mmol/L", "reference_low": 3.5, "reference_high": 5.8, "status": "NORMAL", "raw_text": "3.8", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-ALT", "analyte": "alt", "display_name": "ALT", "panel": "chemistry", "value": 148, "unit": "U/L", "reference_low": 12, "reference_high": 130, "status": "HIGH", "raw_text": "148 H", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-TBIL", "analyte": "total_bilirubin", "display_name": "Total Bilirubin", "panel": "chemistry", "value": 0.3, "unit": "mg/dL", "reference_low": 0.0, "reference_high": 0.9, "status": "NORMAL", "raw_text": "0.3", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-FPLI", "analyte": "fpli", "display_name": "Spec fPL (fPLI)", "panel": "special", "value": 6.8, "unit": "µg/L", "reference_low": 0, "reference_high": 3.5, "status": "HIGH", "raw_text": "6.8 H", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-USG", "analyte": "usg", "display_name": "Urine Specific Gravity", "panel": "urinalysis", "value": 1.022, "unit": "", "reference_low": 1.035, "reference_high": null, "status": "LOW", "raw_text": "1.022", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-UPC", "analyte": "upc", "display_name": "Urine Protein:Creatinine Ratio", "panel": "urinalysis", "value": 0.3, "unit": "ratio", "reference_low": null, "reference_high": 0.2, "status": "HIGH", "raw_text": "0.3", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-PLT", "analyte": "platelets", "display_name": "Platelet Count", "panel": "cbc", "value": null, "unit": "K/µL", "reference_low": 151, "reference_high": 600, "status": "AMBIGUOUS", "flag": "Data unreadable / ambiguous — manual clinical verification required", "raw_text": "2?8 (smudged print; platelet clumps noted on smear)", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-HCT", "analyte": "hct", "display_name": "Hematocrit", "panel": "cbc", "value": 31, "unit": "%", "reference_low": 30.3, "reference_high": 52.3, "status": "NORMAL", "raw_text": "31", "collected_at": "2026-09-22", "source_document": "RefLab-Accession-26-0922-388.pdf", "laboratory": "Reference Laboratory" },
+        { "lab_id": "LAB-20260922-SBP", "analyte": "systolic_bp", "display_name": "Systolic Blood Pressure (Doppler, single reading)", "panel": "vitals", "value": 165, "unit": "mmHg", "reference_low": null, "reference_high": 140, "status": "HIGH", "raw_text": "165", "collected_at": "2026-09-22", "source_document": "In-clinic exam note 2026-09-22", "laboratory": "In-clinic" }
+      ],
+      "encounters": [
+        {
+          "encounter_id": "ENC-0001",
+          "encounter_date": "2025-04-10",
+          "clinician": "Dr. Andy",
+          "reason": "Senior wellness examination",
+          "findings": "Bright, alert, responsive. Weight 5.8 kg, BCS 6/9. Mild dental calculus. No abnormalities on abdominal palpation.",
+          "assessment": "Clinically healthy senior cat. Baseline senior panel obtained.",
+          "plan": "Routine recheck in 6 months."
+        },
+        {
+          "encounter_id": "ENC-0002",
+          "encounter_date": "2025-11-03",
+          "clinician": "Dr. Andy",
+          "reason": "Caregiver reports intermittent vomiting (2-3 times per month) and mild weight loss",
+          "findings": "Weight 5.4 kg, BCS 5/9. Estimated <5% dehydration. Kidneys palpably small-normal. No abdominal pain elicited.",
+          "assessment": "Declining urine specific gravity; SDMA mildly above reference; equivocal fPLI. Monitor.",
+          "plan": "Discussed renal-supportive diet. Recheck bloodwork and urinalysis in 6 months."
+        },
+        {
+          "encounter_id": "ENC-0003",
+          "encounter_date": "2026-09-22",
+          "clinician": "Dr. Andy",
+          "reason": "Reduced appetite for 5 days, vomiting 1-2 times per week, ongoing weight loss",
+          "findings": "Weight 5.0 kg, BCS 4/9. Approximately 5% dehydration. Mild cranial abdominal discomfort on palpation. Systolic BP 165 mmHg (single Doppler reading, patient stressed).",
+          "assessment": "Working hypothesis: chronic gastritis / dietary indiscretion. Renal values within laboratory reference interval.",
+          "plan": "Maropitant prescribed for 4 days. Recheck in 2 weeks. Platelet count to be repeated - printed value unreadable."
+        }
+      ],
+      "home_observations": [
+        {
+          "observation_id": "OBS-0001",
+          "observed_at": "2026-10-01T19:30:00-06:00",
+          "reported_by": "caregiver",
+          "channel": "haiiro",
+          "symptoms": ["vomiting", "reduced appetite", "increased thirst"],
+          "free_text": "Michelin threw up twice today (yellow foam) and only ate about half of his breakfast. He seems to be drinking more than usual.",
+          "appetite": "reduced",
+          "water_intake": "increased",
+          "vomiting_episodes_24h": 2,
+          "hours_since_last_meal": 10,
+          "hours_since_last_urination": 4,
+          "straining_to_urinate": false,
+          "breathing_difficulty": false,
+          "lethargy": false,
+          "media": [
+            {
+              "media_id": "MED-0001",
+              "media_type": "photo",
+              "mime_type": "image/jpeg",
+              "uri": "s3://haiiro-media/MICH-001/2026-10-01/vomit_photo.jpg",
+              "caregiver_caption": "Photo of the vomit on the rug (taken in low light)",
+              "assessment_status": "AMBIGUOUS",
+              "assessment_finding": null,
+              "flag": "Data unreadable / ambiguous — manual clinical verification required"
+            }
+          ]
+        }
+      ],
+      "triage_events": [
+        {
+          "event_id": "TRI-0001",
+          "created_at": "2026-10-01T19:31:00-06:00",
+          "observation_id": "OBS-0001",
+          "level": "YELLOW",
+          "escalated_to_vet": true,
+          "escalation_reason": "Repeated vomiting with reduced appetite in a patient with active renal/pancreatic problems",
+          "rule_hits": ["YELLOW: vomiting 2x in 24h", "YELLOW: reduced appetite", "YELLOW: increased water intake (polydipsia)"],
+          "llm_level": "YELLOW",
+          "llm_used": true,
+          "model": "gemini-2.5-flash"
+        }
+      ],
+      "escalations": [
+        {
+          "escalation_id": "ESC-0001",
+          "created_at": "2026-10-01T19:31:00-06:00",
+          "patient_id": "MICH-001",
+          "level": "YELLOW",
+          "recipient": "Dr. Andy",
+          "reason": "Repeated vomiting with reduced appetite in a patient with active renal/pancreatic problems",
+          "observation_id": "OBS-0001",
+          "status": "ACKNOWLEDGED"
+        }
+      ],
+      "record_version": 7,
+      "updated_at": "2026-10-01T19:31:00-06:00",
+      "last_updated_by": "haiiro"
+    }
+  ]
+}
