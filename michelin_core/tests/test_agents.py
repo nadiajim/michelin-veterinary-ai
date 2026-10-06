@@ -222,6 +222,12 @@ class TestFastAPIEndpoints:
         assert res.status_code in (302, 307)
         assert res.headers["location"] == "/docs"
 
+    def test_demo_endpoint(self, app_client: TestClient):
+        res = app_client.get("/demo")
+        assert res.status_code == 200
+        assert "text/html" in res.headers["content-type"]
+        assert "Michelin: Veterinary Multi-Agent Ecosystem" in res.text
+
     def test_health_endpoint(self, app_client: TestClient):
         res = app_client.get("/health")
         assert res.status_code == 200

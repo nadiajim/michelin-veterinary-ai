@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Michelin Veterinary AI - 4-Minute Clinical Video Simulation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(0.98); }
+    }
+    .pulse-alert {
+      animation: pulse-subtle 2s infinite ease-in-out;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(150, 150, 150, 0.3);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased p-3 md:p-6 min-h-screen flex flex-col justify-between">
+
+  <!-- TOP HEADER / CONTROLS -->
+  <header class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl mb-4">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 font-bold text-xl">
+          🐾
+        </div>
+        <div>
+          <h1 class="text-base md:text-lg font-bold flex items-center gap-2">
+            Michelin: Veterinary Multi-Agent Ecosystem
+            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">Interactive Video Demo (4:00)</span>
+          </h1>
+          <p class="text-xs text-slate-400">
+            Autonomous Co-Pilot (Dr. Andy) + Haiiro Triage Companion + Central Patient Store (SSOT)
+          </p>
+        </div>
+      </div>
+
+      <!-- Playback Actions -->
+      <div class="flex items-center gap-2">
+        <button id="btnPlay" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs flex items-center gap-2 shadow-lg transition-all active:scale-95">
+          <span id="playIcon">▶</span> <span id="playText">Play Video</span>
+        </button>
+        <button id="btnReset" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-slate-200 font-medium transition-all">
+          ⏮ Reset
+        </button>
+        <button id="btnVoice" class="px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-medium text-slate-300 hover:text-white flex items-center gap-1.5 transition-all" title="Toggle audio voice narration">
+          <span id="voiceIcon">🔊</span> Audio Voiceover
+        </button>
+        <div class="hidden sm:flex items-center gap-1 bg-slate-950 px-2 py-1.5 rounded-lg border border-slate-800 text-xs text-slate-400 font-mono">
+          <span id="timeCurrent">0:00</span> / <span>4:00</span>
+        </div>
+        <a href="/docs" class="px-3 py-2 rounded-xl bg-cyan-600/30 hover:bg-cyan-600/50 border border-cyan-500/40 text-cyan-300 text-xs font-medium transition-all">
+          Explore API Docs ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- Scrubber Timeline -->
+    <div class="mt-4">
+      <div class="relative w-full h-2 bg-slate-800 rounded-full cursor-pointer overflow-hidden" id="timelineBar">
+        <div id="progressFill" class="absolute top-0 left-0 h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 w-0 transition-all duration-100"></div>
+      </div>
+      <!-- Chapter Pills -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-1.5 mt-2.5">
+        <button class="chapter-btn text-left p-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs font-medium transition-all" data-seek="0">
+          <span class="block text-[10px] opacity-70">0:00 - 0:45</span>
+          1. The Clinical Crisis
+        </button>
+        <button class="chapter-btn text-left p-1.5 rounded-lg border border-transparent hover:border-slate-700 bg-slate-800/40 text-slate-400 text-xs font-medium transition-all" data-seek="45">
+          <span class="block text-[10px] opacity-70">0:45 - 1:45</span>
+          2. Haiiro Triage (Home)
+        </button>
+        <button class="chapter-btn text-left p-1.5 rounded-lg border border-transparent hover:border-slate-700 bg-slate-800/40 text-slate-400 text-xs font-medium transition-all" data-seek="105">
+          <span class="block text-[10px] opacity-70">1:45 - 2:30</span>
+          3. Central SSOT Store
+        </button>
+        <button class="chapter-btn text-left p-1.5 rounded-lg border border-transparent hover:border-slate-700 bg-slate-800/40 text-slate-400 text-xs font-medium transition-all" data-seek="150">
+          <span class="block text-[10px] opacity-70">2:30 - 3:30</span>
+          4. Michelin Co-Pilot
+        </button>
+        <button class="chapter-btn text-left p-1.5 rounded-lg border border-transparent hover:border-slate-700 bg-slate-800/40 text-slate-400 text-xs font-medium transition-all" data-seek="210">
+          <span class="block text-[10px] opacity-70">3:30 - 4:00</span>
+          5. Medical Guardrails
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN DUAL-STAGE VIDEO DISPLAY -->
+  <main class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1">
+
+    <!-- LEFT STAGE: HAIRO CAREGIVER PHONE SIMULATOR (5 cols) -->
+    <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col shadow-xl relative overflow-hidden">
+      <!-- Device Frame Top Bar -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-base">📱</span>
+          <div>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-teal-400">Haiiro • Caregiver Companion</h2>
+            <p class="text-[11px] text-slate-400">Patient: Michelin (10.5yo MN DSH)</p>
+          </div>
+        </div>
+        <div id="triageBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+          STANDBY
+        </div>
+      </div>
+
+      <!-- Chat Screen Simulation -->
+      <div id="chatFeed" class="flex-1 space-y-3 overflow-y-auto max-h-[380px] custom-scrollbar pr-1 text-xs">
+        <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-2.5 text-slate-300">
+          <span class="text-teal-400 font-semibold block mb-0.5">Haiiro (9:00 AM):</span>
+          Good morning! How is Michelin feeling today? Let me know about his appetite, energy, or if you noticed any vomiting.
+        </div>
+      </div>
+
+      <!-- Attachment / Camera Box -->
+      <div id="mediaBox" class="mt-3 bg-slate-950/80 border border-dashed border-slate-700 rounded-xl p-2.5 text-xs text-slate-400 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">📷</span>
+          <div>
+            <p class="font-medium text-slate-300" id="mediaCaption">No media attached</p>
+            <p class="text-[11px] text-slate-500" id="mediaStatus">Zero-hallucination OCR ready</p>
+          </div>
+        </div>
+        <span id="mediaFlagPill" class="hidden text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/40">AMBIGUOUS</span>
+      </div>
+
+      <!-- Haiiro Status Telemetry -->
+      <div class="mt-3 pt-2.5 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+        <span>Latency: <strong class="text-emerald-400 font-mono">420ms</strong></span>
+        <span>Model: <strong class="text-teal-400 font-mono">gemini-2.5-flash</strong></span>
+        <span>Escalation: <strong id="telemetryEscalation" class="text-slate-400">NONE</strong></span>
+      </div>
+    </div>
+
+    <!-- RIGHT STAGE: MICHELIN CLINICAL CO-PILOT (DR. ANDY) (7 cols) -->
+    <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col shadow-xl relative overflow-hidden">
+      <!-- Clinical Header -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-base">🩺</span>
+          <div>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-cyan-400">Michelin • Clinical Co-Pilot (Dr. Andy)</h2>
+            <p class="text-[11px] text-slate-400">Central Patient Store (SSOT) • Version: <span id="ssotVersion" class="font-mono text-cyan-400">v7</span></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="irisBadge" class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+            IRIS STAGING: PENDING
+          </span>
+        </div>
+      </div>
+
+      <!-- Clinical Working Hypothesis Bar -->
+      <div class="bg-slate-950/70 border border-slate-800 rounded-xl p-2.5 mb-3 text-xs">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-[11px] font-semibold text-slate-400">DR. ANDY'S WORKING HYPOTHESIS:</span>
+          <span class="text-[10px] text-amber-400 font-mono">CROSS-EXAMINATION ACTIVE</span>
+        </div>
+        <p class="italic text-slate-300" id="hypothesisText">
+          "Chronic gastritis / dietary indiscretion. Renal values nominal inside laboratory reference interval."
+        </p>
+      </div>
+
+      <!-- Trend Chart & Nuance Panel -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+        <!-- Creatinine & USG Trend -->
+        <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-2.5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-200">Creatinine & USG Longitudinal</span>
+            <span class="text-[10px] text-rose-400 font-medium">IRIS Stage 2 Creep</span>
+          </div>
+          <!-- Trend Graph Simulation -->
+          <div class="space-y-1.5 text-xs font-mono">
+            <div>
+              <div class="flex justify-between text-[11px] text-slate-400 mb-0.5">
+                <span>2025-04 (Baseline):</span>
+                <span>Crea: <strong>1.4</strong> | USG: <strong>1.045</strong></span>
+              </div>
+              <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div class="bg-emerald-500 h-full w-[45%]"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-[11px] text-slate-400 mb-0.5">
+                <span>2025-11 (Recheck):</span>
+                <span>Crea: <strong>1.9</strong> | USG: <strong>1.030</strong></span>
+              </div>
+              <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div class="bg-amber-500 h-full w-[65%]"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-[11px] text-slate-400 mb-0.5">
+                <span class="text-rose-400 font-bold">2026-09 (Current):</span>
+                <span class="text-rose-400">Crea: <strong>2.3</strong> | USG: <strong>1.022</strong></span>
+              </div>
+              <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div class="bg-rose-500 h-full w-[85%]"></div>
+              </div>
+            </div>
+          </div>
+          <p class="text-[10px] text-amber-400 mt-2">
+            ⚠️ 2.3 mg/dL is under lab upper limit (2.4), but +64% rise with inadequate USG (1.022 < 1.035) confirms IRIS Stage 2.
+          </p>
+        </div>
+
+        <!-- Feline Triaditis Radar -->
+        <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-2.5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-200">Feline Triaditis Triad</span>
+            <span class="text-[10px] text-purple-400 font-bold">HIGH RISK</span>
+          </div>
+          <div class="space-y-1 text-xs">
+            <div class="flex items-center justify-between p-1 rounded bg-slate-800/60">
+              <span class="text-slate-300">1. Pancreas (Spec fPL)</span>
+              <span class="text-rose-400 font-bold font-mono">6.8 µg/L (High > 5.4)</span>
+            </div>
+            <div class="flex items-center justify-between p-1 rounded bg-slate-800/60">
+              <span class="text-slate-300">2. Liver/Biliary (ALT)</span>
+              <span class="text-rose-400 font-bold font-mono">148 U/L (High > 130)</span>
+            </div>
+            <div class="flex items-center justify-between p-1 rounded bg-slate-800/60">
+              <span class="text-slate-300">3. GI / Weight Trend</span>
+              <span class="text-amber-400 font-bold font-mono">5.8kg → 5.0kg (-13.8%)</span>
+            </div>
+          </div>
+          <p class="text-[10px] text-purple-300 mt-2">
+            🔍 Triaditis suspected. Challenge Dr. Andy to order abdominal ultrasound & small intestine cobalamin/folate.
+          </p>
+        </div>
+      </div>
+
+      <!-- Michelin Challenge Output Log -->
+      <div class="flex-1 bg-slate-950/80 border border-slate-800 rounded-xl p-2.5 text-xs font-mono overflow-y-auto max-h-[140px] custom-scrollbar" id="copilotTerminal">
+        <p class="text-emerald-400">> Michelin co-pilot initialized (gemini-2.5-pro).</p>
+        <p class="text-slate-400">> Ready for longitudinal differential audit...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- LIVE VOICE / SUBTITLES BANNER -->
+  <footer class="mt-4 bg-slate-900 border border-slate-800 rounded-2xl p-3.5 shadow-xl flex items-center gap-3">
+    <div class="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm shrink-0">
+      🎙️
+    </div>
+    <div class="flex-1">
+      <div class="flex items-center justify-between mb-0.5">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-400" id="narrationSpeaker">NARRATOR (MICHELIN ECOSYSTEM)</span>
+        <span class="text-[10px] text-slate-500 font-mono" id="narrationTime">SCENE 1: INTRODUCTION</span>
+      </div>
+      <p class="text-xs text-slate-200 leading-relaxed" id="narrationText">
+        "Welcome to Michelin: an autonomous, multi-agent veterinary clinical ecosystem designed specifically for the complexities of feline internal medicine."
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // 4-Minute Storyboard Definition (240 seconds total)
+    const scriptTimeline = [
+      {
+        start: 0,
+        end: 25,
+        title: "Act 1: The Clinical Crisis",
+        speaker: "DR. EMILY VANCE (VETERINARY MEDICAL DIRECTOR)",
+        text: "Cats are masters of hiding chronic disease until end-stage organ failure. Meet Michelin, a 10.5-year-old Domestic Shorthair. At first glance, his bloodwork appears unremarkable, but longitudinal data reveals a hidden medical crisis.",
+        setup: () => {
+          updateTriage("STANDBY", "slate");
+          updateIris("IRIS STAGING: PENDING", "slate");
+          setHypothesis("Routine wellness / age-related mild changes.");
+          logTerminal("> Patient loaded: MICH-001 (Michelin, 10.5yo MN DSH).\n> Baseline kidney function: Creatinine 1.4 mg/dL (2025-04).");
+        }
+      },
+      {
+        start: 25,
+        end: 50,
+        title: "Act 1: The Subtle Creep",
+        speaker: "DR. EMILY VANCE",
+        text: "Over 18 months, Michelin's creatinine climbed from 1.4 to 1.9, and finally to 2.3 mg/dL. Standard lab reports flag this as 'NORMAL' because it's under the 2.4 reference cutoff. But with a declining urine specific gravity of 1.022, Michelin is already in IRIS Stage 2 Chronic Kidney Disease.",
+        setup: () => {
+          updateIris("IRIS STAGE 2 CKD (PROVISIONAL)", "rose");
+          logTerminal("> Longitudinal analysis triggered:\n  Creatinine: 1.4 -> 1.9 -> 2.3 mg/dL (+64.3%)\n  USG: 1.045 -> 1.022 (Inadequate feline concentration)\n  [ALERT] Nominal 'normal' lab flag rejected by feline domain logic.");
+        }
+      },
+      {
+        start: 50,
+        end: 80,
+        title: "Act 2: Haiiro Caregiver Companion",
+        speaker: "HAIRO AGENT (GEMINI 2.5 FLASH)",
+        text: "Meanwhile at home, Michelin's caregiver notices him throwing up bile and acting lethargic. Instead of waiting for office hours, they open Haiiro, our empathetic, caregiver-facing triage companion.",
+        setup: () => {
+          addChatMessage("caregiver", "Michelin threw up twice today (yellow bile) and only ate about half his food. He seems to be drinking a lot of water.");
+          addChatMessage("haiiro", "Thank you for letting me know. Let's check a few details to make sure Michelin is safe.");
+          updateTriage("EVALUATING...", "amber");
+        }
+      },
+      {
+        start: 80,
+        end: 110,
+        title: "Act 2: Strict OCR Ambiguity Guardrail",
+        speaker: "AI SAFETY ARCHITECT",
+        text: "The caregiver snaps a photo of the vomit in low light. In traditional AI, multimodal models hallucinate details from blurry photos. In Michelin, our strict OCR protocol enforces: if an image or metric is blurred, output AMBIGUOUS, set finding to null, and flag for clinical verification.",
+        setup: () => {
+          document.getElementById("mediaCaption").innerText = "Photo: vomit_on_rug.jpg (low-light, blurry)";
+          document.getElementById("mediaStatus").innerText = "status: AMBIGUOUS • value: null";
+          document.getElementById("mediaFlagPill").classList.remove("hidden");
+          logTerminal("> Image inspection: status=AMBIGUOUS\n  Flag: 'Data unreadable / ambiguous — manual clinical verification required'\n  [GUARDRAIL APPLIED] Zero hallucination enforced.");
+        }
+      },
+      {
+        start: 110,
+        end: 145,
+        title: "Act 2: Emergency Red-Flag Triage & Escalation",
+        speaker: "HAIRO AGENT",
+        text: "Haiiro detects repeated vomiting combined with reduced appetite in a patient with active chronic renal risk. Haiiro classifies the risk as YELLOW-to-RED, reassures the caregiver with clear, compassionate actions, and automatically escalates to Dr. Andy.",
+        setup: () => {
+          updateTriage("YELLOW • ESCALATING TO DR. ANDY", "amber");
+          document.getElementById("telemetryEscalation").innerText = "ESCALATED TO DR. ANDY";
+          document.getElementById("telemetryEscalation").className = "text-amber-400 font-bold";
+          addChatMessage("haiiro", "Because Michelin has a history of kidney values we are monitoring, I have directly notified Dr. Andy's team at the clinic. Please keep fresh water available, and we will contact you today.");
+        }
+      },
+      {
+        start: 145,
+        end: 175,
+        title: "Act 3: Central Patient Store (SSOT)",
+        speaker: "SYSTEM ARCHITECT",
+        text: "Both Haiiro and Michelin read and write to a single Central Patient Store (SSOT). Using atomic version locking, the observation, media assessment, and triage event increment the record to Version 8. State drift between the caregiver and the clinic is impossible.",
+        setup: () => {
+          document.getElementById("ssotVersion").innerText = "v8 (Atomic Bump)";
+          document.getElementById("ssotVersion").className = "font-mono text-emerald-400 font-bold";
+          logTerminal("> Central Patient Store (SSOT) atomic transaction:\n  Observation OBS-0002 recorded.\n  Escalation ESC-0002 filed for Dr. Andy.\n  Record version bumped: v7 -> v8. Zero state drift.");
+        }
+      },
+      {
+        start: 175,
+        end: 210,
+        title: "Act 4: Michelin Co-Pilot Cross-Examination",
+        speaker: "MICHELIN CO-PILOT (GEMINI 2.5 PRO)",
+        text: "At the clinic, Dr. Andy logs in. His working hypothesis was simple gastritis. Michelin immediately cross-examines this: challenging the diagnosis by correlating the rising creatinine, the fPLI surge to 6.8 µg/L, and elevated ALT—flagging Feline Triaditis.",
+        setup: () => {
+          setHypothesis("Simple gastritis / dietary indiscretion.");
+          logTerminal("> CLINICAL CROSS-EXAMINATION (Dr. Andy):\n  [CHALLENGE 1]: Spec fPL 6.8 µg/L + ALT 148 U/L + GI signs support Feline Triaditis, not simple gastritis.\n  [CHALLENGE 2]: Creatinine trend (1.4 -> 2.3) + USG 1.022 confirms IRIS Stage 2 CKD.\n  [ACTION]: Recommended abdominal ultrasound and small intestinal cobalamin/folate.");
+        }
+      },
+      {
+        start: 210,
+        end: 240,
+        title: "Act 5: Medical Guardrails & Conclusion",
+        speaker: "DR. EMILY VANCE",
+        text: "Notice that Michelin's smudged platelet count was never guessed or interpolated—it was flagged for repeat testing. Zero hallucination, strict OCR, and deep feline domain nuance. This is Michelin: empowering veterinarians and protecting feline patients everywhere.",
+        setup: () => {
+          logTerminal("> Guardrail audit complete: 0 unverified citations allowed.\n> Platelet count: kept null ('Data unreadable / ambiguous').\n> Patient Michelin safely transitioned to targeted renal & pancreatic care.");
+          updateTriage("TRIAGE COMPLETE", "emerald");
+        }
+      }
+    ];
+
+    let currentTime = 0;
+    let isPlaying = false;
+    let timer = null;
+    let voiceEnabled = false;
+    let currentSceneIndex = -1;
+
+    const btnPlay = document.getElementById("btnPlay");
+    const playIcon = document.getElementById("playIcon");
+    const playText = document.getElementById("playText");
+    const btnReset = document.getElementById("btnReset");
+    const btnVoice = document.getElementById("btnVoice");
+    const timeCurrent = document.getElementById("timeCurrent");
+    const progressFill = document.getElementById("progressFill");
+    const timelineBar = document.getElementById("timelineBar");
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function updateTriage(text, color) {
+      const badge = document.getElementById("triageBadge");
+      badge.innerText = text;
+      badge.className = `text-xs font-semibold px-2.5 py-1 rounded-full border transition-all ${
+        color === 'rose' ? 'bg-rose-500/20 text-rose-400 border-rose-500/40 pulse-alert' :
+        color === 'amber' ? 'bg-amber-500/20 text-amber-400 border-amber-500/40 pulse-alert' :
+        color === 'emerald' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' :
+        'bg-slate-800 text-slate-400 border-slate-700'
+      }`;
+    }
+
+    function updateIris(text, color) {
+      const badge = document.getElementById("irisBadge");
+      badge.innerText = text;
+      badge.className = `text-xs font-bold px-2.5 py-1 rounded-full border transition-all ${
+        color === 'rose' ? 'bg-rose-500/20 text-rose-400 border-rose-500/40' :
+        color === 'amber' ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' :
+        'bg-slate-800 text-slate-400 border-slate-700'
+      }`;
+    }
+
+    function setHypothesis(text) {
+      document.getElementById("hypothesisText").innerText = `"${text}"`;
+    }
+
+    function logTerminal(msg) {
+      const term = document.getElementById("copilotTerminal");
+      const p = document.createElement("p");
+      p.className = "text-cyan-300 mt-1 whitespace-pre-line";
+      p.innerText = msg;
+      term.appendChild(p);
+      term.scrollTop = term.scrollHeight;
+    }
+
+    function addChatMessage(sender, text) {
+      const feed = document.getElementById("chatFeed");
+      const div = document.createElement("div");
+      if (sender === "caregiver") {
+        div.className = "bg-teal-950/60 border border-teal-800/80 rounded-xl p-2.5 text-teal-200 ml-4";
+        div.innerHTML = `<span class="text-teal-400 font-semibold block mb-0.5">Caregiver (9:02 AM):</span>${text}`;
+      } else {
+        div.className = "bg-slate-800/90 border border-slate-700 rounded-xl p-2.5 text-slate-300 mr-4";
+        div.innerHTML = `<span class="text-emerald-400 font-semibold block mb-0.5">Haiiro:</span>${text}`;
+      }
+      feed.appendChild(div);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    function speakText(text) {
+      if (!voiceEnabled || !window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.05;
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function syncScene(time) {
+      const sceneIndex = scriptTimeline.findIndex(s => time >= s.start && time < s.end);
+      if (sceneIndex !== -1 && sceneIndex !== currentSceneIndex) {
+        currentSceneIndex = sceneIndex;
+        const scene = scriptTimeline[sceneIndex];
+
+        document.getElementById("narrationSpeaker").innerText = scene.speaker;
+        document.getElementById("narrationTime").innerText = scene.title.toUpperCase();
+        document.getElementById("narrationText").innerText = `"${scene.text}"`;
+
+        // Highlight active chapter pill
+        document.querySelectorAll(".chapter-btn").forEach((btn, idx) => {
+          if (idx === Math.min(sceneIndex, 4)) {
+            btn.className = "chapter-btn text-left p-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 text-xs font-bold transition-all shadow";
+          } else {
+            btn.className = "chapter-btn text-left p-1.5 rounded-lg border border-transparent hover:border-slate-700 bg-slate-800/40 text-slate-400 text-xs font-medium transition-all";
+          }
+        });
+
+        scene.setup();
+        speakText(scene.text);
+      }
+    }
+
+    function tick() {
+      if (currentTime >= 240) {
+        pauseVideo();
+        currentTime = 240;
+        return;
+      }
+      currentTime += 0.5;
+      timeCurrent.innerText = formatTime(currentTime);
+      progressFill.style.width = `${(currentTime / 240) * 100}%`;
+      syncScene(currentTime);
+    }
+
+    function playVideo() {
+      isPlaying = true;
+      playIcon.innerText = "⏸";
+      playText.innerText = "Pause";
+      btnPlay.className = "px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-medium text-xs flex items-center gap-2 shadow-lg transition-all active:scale-95";
+      timer = setInterval(tick, 500);
+    }
+
+    function pauseVideo() {
+      isPlaying = false;
+      playIcon.innerText = "▶";
+      playText.innerText = "Play Video";
+      btnPlay.className = "px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs flex items-center gap-2 shadow-lg transition-all active:scale-95";
+      if (timer) clearInterval(timer);
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+    }
+
+    btnPlay.addEventListener("click", () => {
+      if (isPlaying) pauseVideo();
+      else playVideo();
+    });
+
+    btnReset.addEventListener("click", () => {
+      pauseVideo();
+      currentTime = 0;
+      currentSceneIndex = -1;
+      timeCurrent.innerText = "0:00";
+      progressFill.style.width = "0%";
+      document.getElementById("chatFeed").innerHTML = `
+        <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-2.5 text-slate-300">
+          <span class="text-teal-400 font-semibold block mb-0.5">Haiiro (9:00 AM):</span>
+          Good morning! How is Michelin feeling today? Let me know about his appetite, energy, or if you noticed any vomiting.
+        </div>
+      `;
+      document.getElementById("copilotTerminal").innerHTML = `
+        <p class="text-emerald-400">> Michelin co-pilot initialized (gemini-2.5-pro).</p>
+        <p class="text-slate-400">> Ready for longitudinal differential audit...</p>
+      `;
+      document.getElementById("mediaCaption").innerText = "No media attached";
+      document.getElementById("mediaStatus").innerText = "Zero-hallucination OCR ready";
+      document.getElementById("mediaFlagPill").classList.add("hidden");
+      document.getElementById("ssotVersion").innerText = "v7";
+      syncScene(0);
+    });
+
+    btnVoice.addEventListener("click", () => {
+      voiceEnabled = !voiceEnabled;
+      btnVoice.className = voiceEnabled
+        ? "px-3 py-2 rounded-xl bg-emerald-600 text-white border border-emerald-500 text-xs font-medium flex items-center gap-1.5 transition-all shadow"
+        : "px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-medium text-slate-300 hover:text-white flex items-center gap-1.5 transition-all";
+      if (!voiceEnabled && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      } else if (voiceEnabled) {
+        const activeScene = scriptTimeline[currentSceneIndex] || scriptTimeline[0];
+        speakText(activeScene.text);
+      }
+    });
+
+    timelineBar.addEventListener("click", (e) => {
+      const rect = timelineBar.getBoundingClientRect();
+      const clickRatio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      currentTime = clickRatio * 240;
+      timeCurrent.innerText = formatTime(currentTime);
+      progressFill.style.width = `${clickRatio * 100}%`;
+      syncScene(currentTime);
+    });
+
+    document.querySelectorAll(".chapter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const seekTime = parseFloat(btn.dataset.seek);
+        currentTime = seekTime;
+        timeCurrent.innerText = formatTime(currentTime);
+        progressFill.style.width = `${(currentTime / 240) * 100}%`;
+        syncScene(currentTime);
+        if (!isPlaying) playVideo();
+      });
+    });
+
+    // Initialize first scene
+    syncScene(0);
+  </script>
+</body>
+</html>

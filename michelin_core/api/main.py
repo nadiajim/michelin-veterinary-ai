@@ -62,6 +62,13 @@ def create_app() -> FastAPI:
         from fastapi.responses import RedirectResponse
         return RedirectResponse(url="/docs")
 
+    @app.get("/demo", tags=["system"], summary="Interactive 4-Minute Video Simulation & Demo Player")
+    def demo():
+        from pathlib import Path
+        from fastapi.responses import FileResponse
+        static_demo = Path(__file__).resolve().parent / "static" / "demo.html"
+        return FileResponse(static_demo, media_type="text/html")
+
     @app.get("/health", tags=["system"])
     def health(llm: GeminiClient = Depends(get_llm)) -> dict:
         return {
